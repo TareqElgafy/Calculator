@@ -59,6 +59,8 @@ namespace Calculator_Project {
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  postLabel;
 
 
 	private:
@@ -82,6 +84,8 @@ namespace Calculator_Project {
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->postLabel = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// button1
@@ -103,6 +107,7 @@ namespace Calculator_Project {
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->ReadOnly = true;
+			this->textBox2->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox2->Size = System::Drawing::Size(499, 203);
 			this->textBox2->TabIndex = 1;
 			// 
@@ -165,12 +170,33 @@ namespace Calculator_Project {
 			this->label2->TabIndex = 10;
 			this->label2->Text = L"History:";
 			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->BackColor = System::Drawing::Color::Transparent;
+			this->label3->Location = System::Drawing::Point(13, 346);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(52, 17);
+			this->label3->TabIndex = 12;
+			this->label3->Text = L"postfix:";
+			// 
+			// postLabel
+			// 
+			this->postLabel->AutoSize = true;
+			this->postLabel->BackColor = System::Drawing::Color::Transparent;
+			this->postLabel->Location = System::Drawing::Point(58, 347);
+			this->postLabel->Name = L"postLabel";
+			this->postLabel->Size = System::Drawing::Size(0, 17);
+			this->postLabel->TabIndex = 13;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::SlateGray;
 			this->ClientSize = System::Drawing::Size(587, 378);
+			this->Controls->Add(this->postLabel);
+			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button4);
@@ -198,13 +224,16 @@ namespace Calculator_Project {
 
 		enteredExpression = textBox1->Text;
 		textBox1->Text = "";
-
+	
 		
 		try{
 			string converted_Exp = msclr::interop::marshal_as< string >(enteredExpression); // convert from String^ to string
 			Expression exp = Expression(converted_Exp);
 
-			String^ result = exp.evaluate().ToString();
+			String^ post = gcnew String(exp.toPostfix().c_str()); // from string to String^
+			postLabel->Text = post;
+
+			String^ result = exp.evaluate().ToString();		
 
 			if (counter == 1)
 				textBox2->Text = enteredExpression + "=" + result;
@@ -212,12 +241,12 @@ namespace Calculator_Project {
 				textBox2->Text = textBox2->Text + " \r\n" + enteredExpression + "=" + result;
 
 			}
+		
 
 		}
 		catch (...){
 
 			MessageBox::Show("Syntax error , Pls try again");
-			counter = 0;
 		}
 
 

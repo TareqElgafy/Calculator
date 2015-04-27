@@ -87,6 +87,8 @@ string Expression::toPostfix(){
 	return postfix;
 }
 
+
+
 double Expression::evaluate(){
 	if (postfix == "")
 		this->toPostfix();
