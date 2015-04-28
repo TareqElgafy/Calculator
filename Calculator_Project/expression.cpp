@@ -128,32 +128,38 @@ double Expression::evaluate(){
 
 	while (p != postfix.end()){
 		operand = "";
-		if (isdigit(*p)) {
-			while (*p != ' '){
+		if (isdigit(*p))
+		{
+
+			while (*p != ' ')
+			{
 				operand += *p;
 				p++;
+				if (p == postfix.end()) break;
 			}
+
 			PTA.push(stod(operand));
-			
+
 		}
 
-		if (is_operator(*p))  /*p == '+' ||*p == '-' ||*p == '*' ||*p == '/' ||*p == '%'*/
+		else if (is_operator(*p))  /*p == '+' ||*p == '-' ||*p == '*' ||*p == '/' ||*p == '%'*/
 		{
 			left_operand = PTA.top(); PTA.pop();
 			rigtht_operand = PTA.top(); PTA.pop();
-			answer = calc(*p,left_operand, rigtht_operand);
+			answer = calc(*p, left_operand, rigtht_operand);
 			PTA.push(answer);
 		}
-		if (*p == 's' || *p == 'c' || *p == 't' || *p == 'e' || *p == 'l' || *p == 'n'){
 
+		else if (*p == 's' || *p == 'c' || *p == 't' || *p == 'e' || *p == 'l' || *p == 'n')
+		{
 			left_operand = PTA.top(); PTA.pop();
-			answer = calc(*p,left_operand);
+			answer = calc(*p, left_operand);
 			PTA.push(answer);
-
 		}
 
-		p++;
+		if (p != postfix.end()) p++;
 	}
+
 	value = PTA.top();
 	return PTA.top();
 
