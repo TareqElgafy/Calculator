@@ -6,6 +6,7 @@ string Expression::toPostfix(){
 	stackList<char> operatorsStack;
 	string enteredAlpha = "";
 	bool fun = false;
+
 	for (int i = 0; i < infixExpression.length(); i++){
 
 		if (isspace(infixExpression[i]) /*infixExpression[i] == ' '*/) continue;
@@ -185,6 +186,7 @@ int Expression::operatorStrenght(char op){
 	case '*':strengh = 2; break;
 	case '/':strengh = 2; break;
 	case '%':strengh = 2; break;
+
 	//case 's':strengh = 2; break;
 	//case 'c':strengh = 2; break;
 	//case 't':strengh = 2; break;

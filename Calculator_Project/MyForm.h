@@ -25,8 +25,6 @@ namespace Calculator_Project {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 
-		int counter=0;
-
 	public:
 		MyForm(void)
 		{
@@ -139,6 +137,7 @@ namespace Calculator_Project {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(458, 22);
 			this->textBox1->TabIndex = 4;
+			this->textBox1->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox1_KeyUp);
 			// 
 			// button4
 			// 
@@ -218,7 +217,6 @@ namespace Calculator_Project {
 
 #pragma endregion
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		counter++; 
 		String^ enteredExpression = "";
 		String^ postfixExpression = "";
 
@@ -235,12 +233,12 @@ namespace Calculator_Project {
 
 			String^ result = exp.evaluate().ToString();		
 
-			if (counter == 1)
+			if (textBox2->Text == "")
 				textBox2->Text = enteredExpression + "=" + result;
 			else{
 				textBox2->Text = textBox2->Text + " \r\n" + enteredExpression + "=" + result;
 
-			}
+			} 
 		
 
 		}
@@ -256,7 +254,6 @@ namespace Calculator_Project {
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 	
 			 textBox2->Text = "";
-			 counter = 0;
 	}
 
 			
@@ -295,6 +292,43 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 
 	
 
+}
+private: System::Void textBox1_KeyUp(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
+
+	if (e->KeyCode == Keys::Enter){ // to get get result when enter is pressed
+
+	
+	String^ enteredExpression = "";
+	String^ postfixExpression = "";
+
+	enteredExpression = textBox1->Text;
+	textBox1->Text = "";
+
+
+	try{
+		string converted_Exp = msclr::interop::marshal_as< string >(enteredExpression); // convert from String^ to string
+		Expression exp = Expression(converted_Exp);
+
+		String^ post = gcnew String(exp.toPostfix().c_str()); // from string to String^
+		postLabel->Text = post;
+
+		String^ result = exp.evaluate().ToString();
+
+		if (textBox2->Text == "")
+			textBox2->Text = enteredExpression + "=" + result;
+		else{
+			textBox2->Text = textBox2->Text + " \r\n" + enteredExpression + "=" + result;
+
+		}
+
+
+	}
+	catch (...){
+
+		MessageBox::Show("Syntax error , Pls try again");
+	}
+
+}
 }
 };
 }
