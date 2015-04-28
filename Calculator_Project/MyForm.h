@@ -302,7 +302,6 @@ private: System::Void textBox1_KeyUp(System::Object^  sender, System::Windows::F
 	String^ postfixExpression = "";
 
 	enteredExpression = textBox1->Text;
-	textBox1->Text = "";
 
 
 	try{
