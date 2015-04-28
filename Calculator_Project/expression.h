@@ -14,7 +14,7 @@ private:
 
 	//helper functions
 	char isFunctionName(const string& f);
-	double calc(char ptr, double a, double b = 0);
+	double calc(char ch, double a, double b = 0);
 	bool Expression::IsLowerProirty(char op1, char op2);
 
 	bool is_operator(char c)
