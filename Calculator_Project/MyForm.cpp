@@ -8,5 +8,6 @@ void Main(array<String^>^ args)
 	Application::SetCompatibleTextRenderingDefault(false);
 	Calculator_Project::MyForm form;
 	Application::Run(%form);
+
 	
 } 
