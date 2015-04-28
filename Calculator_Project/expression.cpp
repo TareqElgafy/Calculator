@@ -65,6 +65,11 @@ string Expression::toPostfix(){
 
 			}
 			operatorsStack.pop(); // for the '('
+			if (isalpha(operatorsStack.top()))
+			{
+				postfix = postfix + " " + operatorsStack.top();
+				operatorsStack.pop();
+			}
 
 		}
 		else if (isalpha(infixExpression[i]))
@@ -94,34 +99,34 @@ double Expression::evaluate(){
 		this->toPostfix();
 
 	string operand = ""; int j = 0;
-	double temp1, temp2, temp_answer;
+	double left_operand, rigtht_operand, answer;
 
 	stackList<double> PTA;
 	string::iterator p = postfix.begin();
 
 	while (p != postfix.end()){
 		operand = "";
-		if (*p >= '0' && *p <= '9') {
+		if (isdigit(*p)) {
 			while (*p != ' '){
 				operand += *p;
 				p++;
 			}
 			PTA.push(stod(operand));
-			//cout << PTA.top() << endl;
+			
 		}
 
 		if (is_operator(*p))  /*p == '+' ||*p == '-' ||*p == '*' ||*p == '/' ||*p == '%'*/
 		{
-			temp1 = PTA.top(); PTA.pop();
-			temp2 = PTA.top(); PTA.pop();
-			temp_answer = calc(temp1, temp2, *p);
-			PTA.push(temp_answer);
+			left_operand = PTA.top(); PTA.pop();
+			rigtht_operand = PTA.top(); PTA.pop();
+			answer = calc(*p,left_operand, rigtht_operand);
+			PTA.push(answer);
 		}
 		if (*p == 's' || *p == 'c' || *p == 't' || *p == 'e'){
 
-			temp1 = PTA.top(); PTA.pop();
-			temp_answer = calc(temp1, 0, *p);
-			PTA.push(temp_answer);
+			left_operand = PTA.top(); PTA.pop();
+			answer = calc(*p,left_operand);
+			PTA.push(answer);
 
 		}
 
@@ -132,8 +137,8 @@ double Expression::evaluate(){
 
 }
 
-double Expression::calc(double a, double b, char ptr){
-	switch (ptr){
+double Expression::calc(char ch,double a, double b){
+	switch (ch){
 	case('+') : return b + a; break;
 	case('-') : return b - a; break;
 	case('*') : return b*a; break;
@@ -180,10 +185,10 @@ int Expression::operatorStrenght(char op){
 	case '*':strengh = 2; break;
 	case '/':strengh = 2; break;
 	case '%':strengh = 2; break;
-	case 's':strengh = 2; break;
-	case 'c':strengh = 2; break;
-	case 't':strengh = 2; break;
-	case 'e':strengh = 2; break;
+	//case 's':strengh = 2; break;
+	//case 'c':strengh = 2; break;
+	//case 't':strengh = 2; break;
+	//case 'e':strengh = 2; break;
 
 
 
