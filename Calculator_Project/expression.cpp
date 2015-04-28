@@ -123,7 +123,7 @@ double Expression::evaluate(){
 			answer = calc(*p,left_operand, rigtht_operand);
 			PTA.push(answer);
 		}
-		if (*p == 's' || *p == 'c' || *p == 't' || *p == 'e'){
+		if (*p == 's' || *p == 'c' || *p == 't' || *p == 'e' || *p == 'l' || *p == 'n'){
 
 			left_operand = PTA.top(); PTA.pop();
 			answer = calc(*p,left_operand);
@@ -145,10 +145,13 @@ double Expression::calc(char ch,double a, double b){
 	case('*') : return b*a; break;
 	case('/') : return b / a; break;
 	case('%') : return ((int)b % (int)a); break;
+	case('^') : return (pow(b,a)); break;
 	case('s') : return sin(a); break;
 	case('c') : return cos(a); break;
 	case('t') : return tan(a); break;
 	case('e') : return exp(a); break;
+	case('l') : return log10(a); break;
+	case('n') : return log(a); break;
 
 
 	default: return 0;
@@ -161,6 +164,8 @@ char Expression::isFunctionName(const string& f){
 	else if (f == "cos") return 'c';
 	else if (f == "tan") return 't';
 	else if (f == "exp") return 'e';
+	else if (f == "log") return 'l';
+	else if (f == "ln") return 'n';
 	else return 0;
 
 }
@@ -186,12 +191,7 @@ int Expression::operatorStrenght(char op){
 	case '*':strengh = 2; break;
 	case '/':strengh = 2; break;
 	case '%':strengh = 2; break;
-
-	//case 's':strengh = 2; break;
-	//case 'c':strengh = 2; break;
-	//case 't':strengh = 2; break;
-	//case 'e':strengh = 2; break;
-
+	case '^':strengh = 3; break;
 
 
 	}
