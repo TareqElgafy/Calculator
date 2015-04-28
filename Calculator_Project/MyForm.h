@@ -18,7 +18,6 @@ namespace Calculator_Project {
 
 
 
-
 	/// <summary>
 	/// Summary for MyForm
 	/// </summary>
@@ -221,7 +220,6 @@ namespace Calculator_Project {
 		String^ postfixExpression = "";
 
 		enteredExpression = textBox1->Text;
-		textBox1->Text = "";
 	
 		
 		try{
@@ -240,12 +238,14 @@ namespace Calculator_Project {
 
 			} 
 		
+			textBox1->Text = "";
 
 		}
 		catch (...){
 
 			MessageBox::Show("Syntax error , Pls try again");
 		}
+
 
 
 
@@ -320,6 +320,8 @@ private: System::Void textBox1_KeyUp(System::Object^  sender, System::Windows::F
 			textBox2->Text = textBox2->Text + " \r\n" + enteredExpression + "=" + result;
 
 		}
+
+		textBox1->Text = "";
 
 
 	}
