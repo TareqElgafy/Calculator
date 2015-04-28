@@ -13,8 +13,8 @@ string Expression::toPostfix(){
 	// check balancing
 
 	for (int i = 0; i < infixExpression.length(); i++){
-		if (infixExpression[i == '(']) bracketsStack.push('(');
-		else if (infixExpression[i == ')']){
+		if (infixExpression[i] == '(') bracketsStack.push('(');
+		else if (infixExpression[i] == ')'){
 
 			if (bracketsStack.top() == '(') bracketsStack.pop();
 
